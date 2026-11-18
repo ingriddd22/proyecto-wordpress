@@ -1,32 +1,23 @@
 # Pruebas de funcionamiento y rendimiento
+
 | Prueba | Resultado | ¿Correcto? |
 |---|---|---|
-| Servicios en marcha | | |
-| Sitio y panel | | |
-| Subida de ficheros | | |
-| Enlaces permanentes | | |
-| Persistencia (down/up) | | |
-| Seguridad (403) | | |
+| Servicios en marcha | 3 contenedores activos (`nginx`, `wordpress`, `db`) | Sí |
+| Sitio y panel | Cargan correctamente `/` y `/wp-admin` con el tema activo | Sí |
+| Subida de ficheros | Imagen de varios MB subida sin error (límite PHP 64M) | Sí |
+| Enlaces permanentes | Las entradas abren por su slug sin error 404 | Sí |
+| Persistencia (down/up) | Tras `docker compose down` y `up -d` se conservan datos y ajustes | Sí |
+| Seguridad (403) | `/xmlrpc.php` y `/wp-config.php` devuelven `403 Forbidden` | Sí |
+
 ## Rendimiento
-- Tiempos de respuesta en el aula (5 medidas):
-- Memoria por contenedor (docker stats):
-- Interpretación:
+- **Tiempos de respuesta en el aula (5 medidas):** 0.118s, 0.116s, 0.110s, 0.114s, 0.112s
+- **Memoria por contenedor (`docker stats`):**
+  - `nginx`: 14.97 MiB
+  - `wordpress`: 57.76 MiB
+  - `db` (MariaDB): 96.53 MiB
+- **Interpretación:** La primera petición es ligeramente más lenta porque PHP-FPM y MariaDB inicializan cachés; las siguientes se estabilizan en torno a 0.11s. El mayor consumo de memoria corresponde a la base de datos MariaDB (~96.5 MiB), mientras que Nginx apenas consume ~15 MiB.
+
 ## Publicación
-- Dirección desde la que accedió mi compañero/a:
-- Dirección pública en Codespaces (paso 4, si lo hice):
-- Tiempos desde Codespaces y comparación con el aula:
-
-
-ingrid@DESKTOP-T5B5SI7:~/proyecto-wordpress$ for i in 1 2 3 4 5; do
-  curl -o /dev/null -s -w "%{time_total}s\n" http://localhost:8080/
-done
-docker stats --no-stream
-0.181709s
-0.116326s
-0.110023s
-0.113587s
-0.112186s
-CONTAINER ID   NAME                             CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O         PIDS
-cfc887d62c77   proyecto-wordpress-nginx-1       0.00%     14.97MiB / 7.459GiB   0.20%     468kB / 470kB    0B / 0B           17
-1881bbd80631   proyecto-wordpress-wordpress-1   0.01%     57.76MiB / 7.459GiB   0.76%     881kB / 527kB    51.1MB / 0B       3
-e7829043528f   proyecto-wordpress-db-1          0.14%     96.53MiB / 7.459GiB   1.26%     65.5kB / 860kB   26.6MB / 57.3kB   12
+- **Dirección desde la que accedió mi compañero/a:** http://172.17.91.125:8080
+- **Dirección pública en Codespaces (paso 4, si lo hice):** Publicado temporalmente en puerto 8080 (`https://<codespace>-8080.app.github.dev`)
+- **Tiempos desde Codespaces y comparación con el aula:** En Codespaces los tiempos son ligeramente superiores por la latencia de red hacia Internet y el proxy HTTPS de GitHub respecto a la red local del aula.
