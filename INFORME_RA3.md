@@ -25,3 +25,9 @@
 ## 3. Copias de Seguridad
 - Realizadas mediante el script `scripts/backup.sh` (volcado de base de datos y empaquetado de `wp-content`).
 - Restauración comprobada con `scripts/restore.sh`.
+
+## Práctica 2. Copias de seguridad y restauración
+
+* **Copia utilizada:** `20261124-145954`.
+* **Qué se borró:** La entrada con ID `1` (*Hello world!*) con `./wp post delete 1 --force` y el plugin `flamingo` con `./wp plugin delete flamingo`.
+* **Cómo se recuperó:** Ejecutando `./scripts/restore.sh 20261124-145954` y confirmando con `SI`. Tras comprobar con `./wp post list` y `./wp plugin list`, ambos volvieron a estar activos.

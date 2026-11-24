@@ -32,3 +32,16 @@ Despliegue de un gestor de contenidos WordPress con Nginx, PHP-FPM y MariaDB med
 - [Personalización del gestor](docs/personalizacion.md)
 - [Seguridad del gestor](docs/seguridad.md)
 - [Pruebas de funcionamiento y rendimiento](docs/pruebas.md)
+
+## Copias de seguridad
+
+El proyecto cuenta con dos scripts en la carpeta `scripts/` para automatizar el respaldo y la recuperación del sitio[cite: 4, 6]:
+
+* **Crear una copia de seguridad:**
+  ```bash
+  ./scripts/backup.sh
+
+## Copias de seguridad
+
+* **Hacer copia:** `./scripts/backup.sh` (guarda la base de datos y `wp-content` en `backups/` y mantiene las últimas 7).
+* **Restaurar copia:** `./scripts/restore.sh` para ver las fechas disponibles y `./scripts/restore.sh AAAAMMDD-HHMMSS` para restaurar (confirmando con `SI`).
