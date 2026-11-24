@@ -31,3 +31,11 @@
 * **Copia utilizada:** `20261124-145954`.
 * **Qué se borró:** La entrada con ID `1` (*Hello world!*) con `./wp post delete 1 --force` y el plugin `flamingo` con `./wp plugin delete flamingo`.
 * **Cómo se recuperó:** Ejecutando `./scripts/restore.sh 20261124-145954` y confirmando con `SI`. Tras comprobar con `./wp post list` y `./wp plugin list`, ambos volvieron a estar activos.
+
+## Práctica 3. Importar y exportar contenidos en distintos formatos
+
+* **WXR (XML):** Exportado el sitio completo (`26` elementos entre entradas, páginas, formularios y ajustes) e importado `contenidos_asir.xml` (`6` entradas en *Noticias*, *Eventos* y *Prácticas*, más `2` páginas).
+* **CSV y JSON:** Importados y actualizados los perfiles desde `usuarios.csv`, y exportados listados de entradas (`entradas.csv`) y usuarios (`usuarios.json`) con WP-CLI.
+* **API REST (JSON):** Consultados los endpoints públicos `/wp-json/wp/v2/posts` y `/wp-json/wp/v2/users`.
+* **SQL y seguridad:** Exportada la tabla `wp_users` (`wp_users.sql`), verificando la presencia de hashes `bcrypt` (`$wp$2y$...`) y comprobando que `exportaciones/` está en `.gitignore`.
+* **Intercambio cooperativo:** Creada y exportada una entrada en la categoría *Prácticas* explicando los cuatro formatos, e importada la entrada correspondiente de mi pareja en el sitio.
