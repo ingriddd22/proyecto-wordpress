@@ -39,3 +39,21 @@
 * **API REST (JSON):** Consultados los endpoints públicos `/wp-json/wp/v2/posts` y `/wp-json/wp/v2/users`.
 * **SQL y seguridad:** Exportada la tabla `wp_users` (`wp_users.sql`), verificando la presencia de hashes `bcrypt` (`$wp$2y$...`) y comprobando que `exportaciones/` está en `.gitignore`.
 * **Intercambio cooperativo:** Creada y exportada una entrada en la categoría *Prácticas* explicando los cuatro formatos, e importada la entrada correspondiente de mi pareja en el sitio.
+
+## Práctica 4. Plantillas y sindicación
+
+### 5. Tema hijo y edición de plantillas
+* **Tema hijo (`iaw-hijo`):** Creado mediante WP-CLI heredando de `twentytwentyfive` y configurado con `theme.json` (fondo `#F4F7FA`, texto `#21295C` y enlaces `#065A82`).
+* **Edición y creación:** Modificada la plantilla `Entradas individuales` (añadiendo autor y categorías) y la parte de plantilla `Pie`; creada la plantilla personalizada `Página informativa` (a ancho amplio, sin barra lateral ni comentarios) y asignada a *Horario del ciclo*.
+* **Almacenamiento:** Comprobado con `./wp post list --post_type=wp_template,wp_template_part` que los cambios del Editor del sitio se almacenan en la base de datos (`single`, `footer` y `wp-custom-template-pagina-informativa`), mientras que en `wp-content/themes/iaw-hijo` permanecen intactos los archivos `style.css`, `functions.php` y `theme.json`.
+
+### 6. Sindicación RSS 2.0 y Atom 1.0
+| Característica | RSS 2.0 | Atom 1.0 | Ejemplo real del sitio |
+| :--- | :--- | :--- | :--- |
+| **Elemento raíz** | `<rss><channel>` | `<feed>` | `<rss version="2.0">` / `<feed xmlns="http://www.w3.org/2005/Atom">` |
+| **Cada entrada** | `<item>` | `<entry>` | `<title>Formatos</title>` |
+| **Fecha** | `<pubDate>` (RFC 822) | `<updated>` y `<published>` (ISO 8601) | `Tue, 24 Nov 2026 15:14:23 +0000` vs `2026-11-24T15:14:41Z` |
+| **Identificador** | `<guid>` (opcional) | `<id>` (obligatorio) | `http://localhost:8080/feed/atom/` |
+| **Estándar** | Especificación de Harvard | RFC 4287 del IETF | Validado correctamente en W3C Feed Validator |
+
+* **Configuración e integración:** Limitado el feed a `5` elementos con `extracto` (`posts_per_rss=5`, `rss_use_excerpt=1`), validado en W3C (`This is a valid RSS feed`), añadido el icono RSS (`/feed/`) en el pie, el enlace de suscripción a Eventos (`/category/eventos/feed/`) y creada la página *Noticias del sector* consumiendo el feed oficial de WordPress y el de mi pareja.
